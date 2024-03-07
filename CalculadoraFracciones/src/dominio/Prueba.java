@@ -2,6 +2,7 @@ package dominio;
 
 public class Prueba {
     public static void main(String[] args) {
+    	
         Fraccion fracionUno = Fraccion.crear(7,4);
         Fraccion fracionDos = Fraccion.crear(-1,-2);
         Mixto mixto =  Mixto.crear(1,3,4);
