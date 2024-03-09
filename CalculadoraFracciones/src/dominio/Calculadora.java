@@ -1,6 +1,5 @@
 package dominio;
 
-import java.util.Iterator;
 
 import Exceptions.DivisionPorCeroException;
 import Exceptions.FraccionNullException;
