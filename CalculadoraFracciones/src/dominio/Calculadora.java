@@ -1,6 +1,5 @@
 package dominio;
 
-
 import Exceptions.DivisionPorCeroException;
 import Exceptions.FraccionNullException;
 
@@ -10,14 +9,27 @@ public class Calculadora {
     private Calculadora(){
         super();
     }
+    
+    
+    
+    public static void VerificarFraccionNula (Fraccion fraccion, String mensaje) {
+    	
+    	if (fraccion== null){
+            throw new FraccionNullException(mensaje);
+        }
+    	 	
+    }
+    
+    
+    
 
     public static Fraccion sumar(Fraccion fraccionUno, Fraccion fraccionDos){
-        if (fraccionUno == null){
-            throw new FraccionNullException("La fraccion uno no puede estar vacia");
-        }
-        if (fraccionDos == null){
-            throw new FraccionNullException("La fraccion dos no puede estar vacia");
-        }
+    	
+    	
+        VerificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia");
+        VerificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia");
+        
+       
         long numerador = fraccionUno.getNumerador() * fraccionDos.getDenominador() + fraccionUno.getDenominador() * fraccionDos.getNumerador();
         long denominador = fraccionUno.getDenominador() * fraccionDos.getDenominador();
 
@@ -29,13 +41,10 @@ public class Calculadora {
 
 
     public static Fraccion restar(Fraccion fraccionUno, Fraccion fraccionDos){
-        if (fraccionUno == null){
-            throw new FraccionNullException("La fraccion uno no puede estar vacia");
-        }
-        if (fraccionDos == null){
-            throw new FraccionNullException("La fraccion dos no puede estar vacia");
-        }
-        
+    	
+    	VerificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia");
+        VerificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia");
+           
         Fraccion NuevafraccionDos = Fraccion.crear( fraccionDos.getNumerador() * (-1)  , fraccionDos.getDenominador());
 
 
@@ -45,19 +54,15 @@ public class Calculadora {
 
 
     public static Fraccion multiplicar(Fraccion fraccionUno, Fraccion fraccionDos) {
-        if (fraccionUno == null) {
-            throw new FraccionNullException("La fracción uno no puede estar vacía");
-        }
-
-        if (fraccionDos == null) {
-            throw new FraccionNullException("La fracción dos no puede estar vacía");
-        }
-
-        Fraccion Resultadonumerador = Fraccion.crear(0, 1);
+       
+    	VerificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia");
+        VerificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia");
+           
+        Fraccion ResultadoNumerador = Fraccion.crear(0, 1);
         Fraccion numeradorFraccionDos = Fraccion.crear(fraccionDos.getNumerador(), 1);
 
         for (int i = 0; i < fraccionUno.getNumerador(); i++) {
-            Resultadonumerador = sumar(Resultadonumerador, numeradorFraccionDos);
+            ResultadoNumerador = sumar(ResultadoNumerador, numeradorFraccionDos);
         }
 
         Fraccion ResultadoDenominador = Fraccion.crear(0, 1);
@@ -67,21 +72,17 @@ public class Calculadora {
             ResultadoDenominador = sumar(ResultadoDenominador, DenominadorFraccionDos);
         }
 
-        long numerador = Resultadonumerador.getNumerador();
+        long numerador = ResultadoNumerador.getNumerador();
         long denominador = ResultadoDenominador.getNumerador();
 
         return Calculadora.simplificar(Fraccion.crear(numerador, denominador));
     }
-
-
+    
 
     public static Fraccion dividir(Fraccion fraccionUno, Fraccion fraccionDos){
-        if (fraccionUno == null){
-            throw new FraccionNullException("La fraccion uno no puede estar vacia");
-        }
-        if (fraccionDos == null){
-            throw new FraccionNullException("La fraccion dos no puede estar vacia");
-        }
+    	VerificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia");
+        VerificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia");
+           
         
         Fraccion NuevafraccionDos = Fraccion.crear(  fraccionDos.getDenominador()   , fraccionDos.getNumerador() );
 
@@ -167,9 +168,11 @@ public class Calculadora {
 
 
     public static Fraccion amplificar(Fraccion fraccion, long amplificador){
-        if (fraccion == null){
-            throw new FraccionNullException("La fraccion no puede estar vacia");
-        }
+    	
+    	
+    	VerificarFraccionNula(fraccion, "La fraccion  no puede estar vacia");
+         
+           
         if (amplificador == 0){
             throw new DivisionPorCeroException("El amplificador no puede estar vacio");
         }
