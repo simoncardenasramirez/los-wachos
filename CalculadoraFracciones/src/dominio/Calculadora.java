@@ -21,6 +21,16 @@ public class Calculadora {
     }
     
     
+    public static void VerificarFraccionNula (Mixto fraccion, String mensaje) {
+    	
+    	if (fraccion== null){
+            throw new FraccionNullException(mensaje);
+        }
+    	 	
+    }
+    
+    
+    
     
 
     public static Fraccion sumar(Fraccion fraccionUno, Fraccion fraccionDos){
@@ -200,9 +210,7 @@ public class Calculadora {
 
 
     public static boolean esIrreductible(Fraccion fraccion) {
-        if (fraccion == null){
-            throw new FraccionNullException("La fraccion no puede estar vacia");
-        }
+    	VerificarFraccionNula(fraccion, "La fraccion  no puede estar vacia");
         return calcularMCD(fraccion.getNumerador(), fraccion.getDenominador()) == 1;
     }
 
@@ -210,9 +218,7 @@ public class Calculadora {
 
 
     public static boolean esPropia(Fraccion fraccion){
-        if (fraccion == null){
-            throw new FraccionNullException("La fraccion no puede estar vacia");
-        }
+    	VerificarFraccionNula(fraccion, "La fraccion  no puede estar vacia");
         return fraccion.getDenominador() > fraccion.getNumerador();
 
     }
@@ -220,9 +226,7 @@ public class Calculadora {
 
 
     public static Mixto convertirAMixto(Fraccion fraccion){
-        if (fraccion == null){
-            throw new FraccionNullException("La fraccion no puede estar vacia");
-        }
+    	VerificarFraccionNula(fraccion, "La fraccion  no puede estar vacia");
         Fraccion fraccionSimplificada = simplificar(fraccion);
 
 
@@ -237,9 +241,8 @@ public class Calculadora {
 
 
     public static Fraccion convertirAFraccion(Mixto mixto) {
-        if (mixto == null){
-            throw new FraccionNullException("El mixto no puede estar vacio");
-        }
+    	VerificarFraccionNula(mixto, "La fraccion  no puede estar vacia");
+       
         long numerador = (mixto.getParteEntera()* mixto.getDenominador()) + mixto.getNumerador();
         long denominador = (mixto.getDenominador());
 

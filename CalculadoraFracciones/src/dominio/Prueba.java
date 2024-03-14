@@ -1,6 +1,6 @@
 package dominio;
 
-import java.util.concurrent.CopyOnWriteArrayList;
+
 
 public class Prueba {
     public static void main(String[] args) {
