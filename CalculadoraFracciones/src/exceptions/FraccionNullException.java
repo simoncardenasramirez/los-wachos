@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 public class FraccionNullException  extends RuntimeException{
     public FraccionNullException(String message) {

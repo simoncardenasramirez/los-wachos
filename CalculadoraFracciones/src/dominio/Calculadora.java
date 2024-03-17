@@ -1,7 +1,8 @@
 package dominio;
 
-import Exceptions.DivisionPorCeroException;
-import Exceptions.FraccionNullException;
+import exceptions.AmplificadorCeroException;
+import exceptions.DivisionPorCeroException;
+import exceptions.FraccionNullException;
 
 public class Calculadora {
 
@@ -10,195 +11,166 @@ public class Calculadora {
         super();
     }
     
-    
-    
-    public static void VerificarFraccionNula (Fraccion fraccion, String mensaje) {
+   
+    public static void verificarFraccionNula (Fraccion fraccion, String mensaje) {
     	
     	if (fraccion== null){
             throw new FraccionNullException(mensaje);
-        }
-    	 	
-    }
-    
-    
-    public static void VerificarFraccionNula (Mixto fraccion, String mensaje) {
+        }  	
     	
-    	if (fraccion== null){
-            throw new FraccionNullException(mensaje);
-        }
-    	 	
     }
     
     
-    
-    
-
     public static Fraccion sumar(Fraccion fraccionUno, Fraccion fraccionDos){
     	
-    	
-        VerificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia");
-        VerificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia");
+        verificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia al hacer la operacion sumar");
+        verificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia al hacer la operacion sumar");
         
-       
         long numerador = fraccionUno.getNumerador() * fraccionDos.getDenominador() + fraccionUno.getDenominador() * fraccionDos.getNumerador();
         long denominador = fraccionUno.getDenominador() * fraccionDos.getDenominador();
-
-
+        
         return simplificar(Fraccion.crear(numerador, denominador));
-
     }
 
-
-
+    
     public static Fraccion restar(Fraccion fraccionUno, Fraccion fraccionDos){
     	
-    	VerificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia");
-        VerificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia");
+    	verificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia al hacer la operacion restar");
+        verificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia al hacer la operacion restar");
            
-        Fraccion NuevafraccionDos = Fraccion.crear( fraccionDos.getNumerador() * (-1)  , fraccionDos.getDenominador());
-
-
-        return sumar(fraccionUno,NuevafraccionDos );
-
+        Fraccion nuevafraccionDos = Fraccion.crear( fraccionDos.getNumerador() * (-1)  , fraccionDos.getDenominador());
+        
+        return sumar(fraccionUno,nuevafraccionDos );
     }
 
 
     public static Fraccion multiplicar(Fraccion fraccionUno, Fraccion fraccionDos) {
        
-    	VerificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia");
-        VerificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia");
+    	verificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia al hacer la operacion multiplicar");
+        verificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia al hacer la operacion multiplicar");
            
-        Fraccion ResultadoNumerador = Fraccion.crear(0, 1);
+        Fraccion resultadoNumerador = Fraccion.crear(0, 1);
         Fraccion numeradorFraccionDos = Fraccion.crear(fraccionDos.getNumerador(), 1);
-
+        
         for (int i = 0; i < fraccionUno.getNumerador(); i++) {
-            ResultadoNumerador = sumar(ResultadoNumerador, numeradorFraccionDos);
+            resultadoNumerador = sumar(resultadoNumerador, numeradorFraccionDos);
         }
-
-        Fraccion ResultadoDenominador = Fraccion.crear(0, 1);
-        Fraccion DenominadorFraccionDos = Fraccion.crear(fraccionDos.getDenominador(), 1);
+        
+        Fraccion resultadoDenominador = Fraccion.crear(0, 1);
+        Fraccion denominadorFraccionDos = Fraccion.crear(fraccionDos.getDenominador(), 1);
 
         for (int i = 0; i < fraccionUno.getDenominador(); i++) {
-            ResultadoDenominador = sumar(ResultadoDenominador, DenominadorFraccionDos);
+            resultadoDenominador = sumar(resultadoDenominador, denominadorFraccionDos);
         }
 
-        long numerador = ResultadoNumerador.getNumerador();
-        long denominador = ResultadoDenominador.getNumerador();
+        long numerador = resultadoNumerador.getNumerador();
+        long denominador = resultadoDenominador.getNumerador();
 
         return Calculadora.simplificar(Fraccion.crear(numerador, denominador));
     }
     
 
     public static Fraccion dividir(Fraccion fraccionUno, Fraccion fraccionDos){
-    	VerificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia");
-        VerificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia");
+    	
+    	verificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia al hacer la operacion dividir");
+        verificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia al hacer la operacion dividir");
+        
+        if(fraccionDos.getNumerador() == 0) {
+        	throw new DivisionPorCeroException("El numerador de la fraccion dos no puede ser cero");
+        }
            
-        
-        Fraccion NuevafraccionDos = Fraccion.crear(  fraccionDos.getDenominador()   , fraccionDos.getNumerador() );
+        Fraccion nuevaFraccionDos = Fraccion.crear(  fraccionDos.getDenominador()   , fraccionDos.getNumerador() );
 
-        
-
-        return simplificar(Calculadora.multiplicar(fraccionUno, NuevafraccionDos));
-
+        return simplificar(Calculadora.multiplicar(fraccionUno, nuevaFraccionDos));
     }
 
 
-
-
-
-
-
-
     public static Mixto sumar(Mixto mixtoUno, Mixto mixtoDos){
+    	
+    	verificarFraccionNula(mixtoUno, "La fraccion mixta uno no puede estar vacia al hacer la operacion sumar");
+        verificarFraccionNula(mixtoDos, "La fraccion mixta dos no puede estar vacia al hacer la operacion sumar");
+    	
         Fraccion fraccionUno = Calculadora.convertirAFraccion(mixtoUno);
         Fraccion fraccionDos = Calculadora.convertirAFraccion(mixtoDos);
 
         Fraccion resultado = simplificar(sumar(fraccionUno, fraccionDos));
-
-
-
+        
         return   convertirAMixto(resultado);
-
     }
 
 
-
     public static Mixto restar(Mixto mixtoUno, Mixto mixtoDos){
+    	
+    	verificarFraccionNula(mixtoUno, "La fraccion mixta uno no puede estar vacia al hacer la operacion restar");
+        verificarFraccionNula(mixtoDos, "La fraccion mixta dos no puede estar vacia al hacer la operacion restar");
+    	
         Fraccion fraccionUno = convertirAFraccion(mixtoUno);
         Fraccion fraccionDos = convertirAFraccion(mixtoDos);
 
         Fraccion resultado = simplificar(restar(fraccionUno, fraccionDos));
 
-
-
         return   convertirAMixto(resultado);
-
     }
 
 
     public static Mixto multiplicar(Mixto mixtoUno, Mixto mixtoDos){
+    	
+    	verificarFraccionNula(mixtoUno, "La fraccion mixta uno no puede estar vacia al hacer la operacion multiplicar");
+        verificarFraccionNula(mixtoDos, "La fraccion mixta dos no puede estar vacia al hacer la operacion multiplicar");
+    	
         Fraccion fraccionUno = convertirAFraccion(mixtoUno);
         Fraccion fraccionDos = convertirAFraccion(mixtoDos);
 
         Fraccion resultado = simplificar(multiplicar(fraccionUno, fraccionDos));
-
-
-
+        
         return   convertirAMixto(resultado);
-
     }
 
+    
     public static Mixto dividir(Mixto mixtoUno, Mixto mixtoDos){
+    	
+    	verificarFraccionNula(mixtoUno, "La fraccion mixta uno no puede estar vacia al hacer la operacion dividir");
+        verificarFraccionNula(mixtoDos, "La fraccion mixta dos no puede estar vacia al hacer la operacion dividir");
+    	
         Fraccion fraccionUno = convertirAFraccion(mixtoUno);
         Fraccion fraccionDos = convertirAFraccion(mixtoDos);
 
         Fraccion resultado = simplificar(dividir(fraccionUno, fraccionDos));
 
-
-
         return   convertirAMixto(resultado);
-
     }
-
-
-
-
-
+    
+    
     public static Fraccion simplificar(Fraccion fraccion){
+    	
+    	verificarFraccionNula(fraccion, "La fraccion no puede estar vacia al hacer la operacion simplificar");
+    	
         long mcd = calcularMCD(fraccion.getNumerador(), fraccion.getDenominador());
 
         long numerador= fraccion.getNumerador() / mcd;
         long denominador = fraccion.getDenominador() / mcd;
-
-
-
+        
         return Fraccion.crear(numerador,denominador);
-
     }
 
 
     public static Fraccion amplificar(Fraccion fraccion, long amplificador){
     	
-    	
-    	VerificarFraccionNula(fraccion, "La fraccion  no puede estar vacia");
+    	verificarFraccionNula(fraccion, "La fraccion no puede estar vacia al hacer la operacion amplificar");
          
-           
         if (amplificador == 0){
-            throw new DivisionPorCeroException("El amplificador no puede estar vacio");
+            throw new AmplificadorCeroException("El amplificador no puede ser cero");
         }
 
         long numerador= fraccion.getNumerador() * amplificador;
         long denominador = fraccion.getDenominador() * amplificador;
 
-
-
         return Fraccion.crear(numerador,denominador);
-
     }
 
 
-
     public static long calcularMCD(long numeroUno, long numeroDos) {
+    	
         while (numeroDos != 0) {
             long temp = numeroDos;
             numeroDos = numeroUno % numeroDos;
@@ -210,25 +182,27 @@ public class Calculadora {
 
 
     public static boolean esIrreductible(Fraccion fraccion) {
-    	VerificarFraccionNula(fraccion, "La fraccion  no puede estar vacia");
+    	
+    	verificarFraccionNula(fraccion, "La fraccion no puede estar vacia para verificar si es Irreductible");
+    	
         return calcularMCD(fraccion.getNumerador(), fraccion.getDenominador()) == 1;
     }
 
 
-
-
     public static boolean esPropia(Fraccion fraccion){
-    	VerificarFraccionNula(fraccion, "La fraccion  no puede estar vacia");
+    	
+    	verificarFraccionNula(fraccion, "La fraccion no puede estar vacia para verificar si es propia");
+    	
         return fraccion.getDenominador() > fraccion.getNumerador();
 
     }
 
 
-
     public static Mixto convertirAMixto(Fraccion fraccion){
-    	VerificarFraccionNula(fraccion, "La fraccion  no puede estar vacia");
+    	
+    	verificarFraccionNula(fraccion, "La fraccion  no puede estar vacia para convertirla a una fraccion mixta");
+    	
         Fraccion fraccionSimplificada = simplificar(fraccion);
-
 
         long parteEntera = fraccionSimplificada.getNumerador()/ fraccionSimplificada.getDenominador();
         long numerador = fraccionSimplificada.getNumerador() - (parteEntera* fraccionSimplificada.getDenominador());
@@ -238,10 +212,9 @@ public class Calculadora {
     }
 
 
-
-
     public static Fraccion convertirAFraccion(Mixto mixto) {
-    	VerificarFraccionNula(mixto, "La fraccion  no puede estar vacia");
+    	
+    	verificarFraccionNula(mixto, "La fraccion  no puede estar vacia para convertirla a una fraccion");
        
         long numerador = (mixto.getParteEntera()* mixto.getDenominador()) + mixto.getNumerador();
         long denominador = (mixto.getDenominador());

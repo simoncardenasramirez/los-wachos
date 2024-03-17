@@ -1,6 +1,6 @@
 package dominio;
 
-import Exceptions.DivisionPorCeroException;
+import exceptions.DivisionPorCeroException;
 
 public class Fraccion {
 
@@ -14,7 +14,6 @@ public class Fraccion {
 
     public static Fraccion crear(long numerador, long denominador){
         return new Fraccion(numerador,denominador);
-
     }
 
     public long getNumerador() {
