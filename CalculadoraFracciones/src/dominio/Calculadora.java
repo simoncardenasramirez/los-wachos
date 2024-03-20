@@ -42,10 +42,10 @@ public class Calculadora {
         
         return sumar(fraccionUno,nuevafraccionDos );
     }
-
+    
 
     public static Fraccion multiplicar(Fraccion fraccionUno, Fraccion fraccionDos) {
-       
+        
     	verificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia al hacer la operacion multiplicar");
         verificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia al hacer la operacion multiplicar");
            
@@ -63,20 +63,20 @@ public class Calculadora {
             resultadoDenominador = sumar(resultadoDenominador, denominadorFraccionDos);
         }
 
-        long numerador = resultadoNumerador.getNumerador();
-        long denominador = resultadoDenominador.getNumerador();
+        long numerador = resultadoNumerador.getNumerador()/resultadoNumerador.getDenominador();
+        long denominador = resultadoDenominador.getNumerador()/resultadoDenominador.getDenominador();
 
         return Calculadora.simplificar(Fraccion.crear(numerador, denominador));
     }
-    
 
+    
     public static Fraccion dividir(Fraccion fraccionUno, Fraccion fraccionDos){
     	
     	verificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia al hacer la operacion dividir");
         verificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia al hacer la operacion dividir");
         
         if(fraccionDos.getNumerador() == 0) {
-        	throw new DivisionPorCeroException("El numerador de la fraccion dos no puede ser cero");
+        	throw new DivisionPorCeroException("El numerador de la fraccion dos no puede ser cero al hacer la operacion dividir");
         }
            
         Fraccion nuevaFraccionDos = Fraccion.crear(  fraccionDos.getDenominador()   , fraccionDos.getNumerador() );
@@ -112,7 +112,7 @@ public class Calculadora {
         return   convertirAMixto(resultado);
     }
 
-
+    
     public static Mixto multiplicar(Mixto mixtoUno, Mixto mixtoDos){
     	
     	verificarFraccionNula(mixtoUno, "La fraccion mixta uno no puede estar vacia al hacer la operacion multiplicar");
@@ -131,6 +131,10 @@ public class Calculadora {
     	
     	verificarFraccionNula(mixtoUno, "La fraccion mixta uno no puede estar vacia al hacer la operacion dividir");
         verificarFraccionNula(mixtoDos, "La fraccion mixta dos no puede estar vacia al hacer la operacion dividir");
+        
+        if (mixtoDos.getParteEntera() == 0 && mixtoDos.getNumerador() == 0) {
+        	throw new DivisionPorCeroException("La parte entera y el numerador de la fraccion mixta dos no pueden ser cero al hacer la operacion dividir");
+        }
     	
         Fraccion fraccionUno = convertirAFraccion(mixtoUno);
         Fraccion fraccionDos = convertirAFraccion(mixtoDos);

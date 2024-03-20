@@ -5,13 +5,10 @@ package dominio;
 public class Prueba {
     public static void main(String[] args) {
     	
-        Fraccion fracionUno = Fraccion.crear(1, 2);
-        Fraccion fracionDos = null;
-        Mixto mixtoUno = null;
-        Mixto mixtoDos = null;
-       // Calculadora.sumar(fracionUno, fracionDos);
-        Calculadora.amplificar(mixtoUno, 0);
+        Fraccion fracionUno = Fraccion.crear(2, 3);
+        Fraccion fracionDos = Fraccion.crear(7,2);
+      
+       System.out.println(Calculadora.multiplicar(fracionUno, fracionDos));
         
-
     }
 }
