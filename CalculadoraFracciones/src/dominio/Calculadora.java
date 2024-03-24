@@ -49,25 +49,14 @@ public class Calculadora {
     	verificarFraccionNula(fraccionUno, "La fraccion uno no puede estar vacia al hacer la operacion multiplicar");
         verificarFraccionNula(fraccionDos, "La fraccion dos no puede estar vacia al hacer la operacion multiplicar");
            
-        Fraccion resultadoNumerador = Fraccion.crear(0, 1);
-        Fraccion numeradorFraccionDos = Fraccion.crear(fraccionDos.getNumerador(), 1);
+        long numeradorResultado = fraccionUno.getNumerador() * fraccionDos.getNumerador();
+        long denominadorResultado = fraccionUno.getDenominador() * fraccionDos.getDenominador();
         
-        for (int i = 0; i < fraccionUno.getNumerador(); i++) {
-            resultadoNumerador = sumar(resultadoNumerador, numeradorFraccionDos);
-        }
+        Fraccion resultado = Fraccion.crear(numeradorResultado, denominadorResultado);
         
-        Fraccion resultadoDenominador = Fraccion.crear(0, 1);
-        Fraccion denominadorFraccionDos = Fraccion.crear(fraccionDos.getDenominador(), 1);
-
-        for (int i = 0; i < fraccionUno.getDenominador(); i++) {
-            resultadoDenominador = sumar(resultadoDenominador, denominadorFraccionDos);
-        }
-
-        long numerador = resultadoNumerador.getNumerador()/resultadoNumerador.getDenominador();
-        long denominador = resultadoDenominador.getNumerador()/resultadoDenominador.getDenominador();
-
-        return Calculadora.simplificar(Fraccion.crear(numerador, denominador));
+        return Calculadora.simplificar(resultado);
     }
+    
 
     
     public static Fraccion dividir(Fraccion fraccionUno, Fraccion fraccionDos){
