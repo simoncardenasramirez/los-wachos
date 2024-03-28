@@ -43,6 +43,7 @@ public class Calculadora {
         return sumar(fraccionUno,nuevafraccionDos );
     }
     
+    
 
     public static Fraccion multiplicar(Fraccion fraccionUno, Fraccion fraccionDos) {
         
@@ -86,20 +87,28 @@ public class Calculadora {
         
         return   convertirAMixto(resultado);
     }
-
-
+    
+    
     public static Mixto restar(Mixto mixtoUno, Mixto mixtoDos){
     	
     	verificarFraccionNula(mixtoUno, "La fraccion mixta uno no puede estar vacia al hacer la operacion restar");
         verificarFraccionNula(mixtoDos, "La fraccion mixta dos no puede estar vacia al hacer la operacion restar");
     	
-        Fraccion fraccionUno = convertirAFraccion(mixtoUno);
-        Fraccion fraccionDos = convertirAFraccion(mixtoDos);
+        Fraccion fraccionUno = Calculadora.convertirAFraccion(mixtoUno);
+        Fraccion fraccionDos = Calculadora.convertirAFraccion(mixtoDos);
 
-        Fraccion resultado = simplificar(restar(fraccionUno, fraccionDos));
+        Fraccion fraccionResta = simplificar(restar(fraccionUno, fraccionDos));
+        
+        Mixto resultado = convertirAMixto(fraccionResta);
+        
+        
+        return Mixto.crear(resultado.getParteEntera(), Math.abs(resultado.getNumerador()), Math.abs(resultado.getDenominador()));
+    } 		
+   
 
-        return   convertirAMixto(resultado);
-    }
+
+
+
 
     
     public static Mixto multiplicar(Mixto mixtoUno, Mixto mixtoDos){
